@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, FlatList, Alert } from 'react-native';
+import { Text, View, StyleSheet, FlatList, Alert, Button } from 'react-native';
 
 import DogListItem from './DogListItem';
 
@@ -21,7 +21,7 @@ export default class ListDogs extends Component{
         this._getDogs();
     }
 
-    _getDogs(){
+    _getDogs = () => {
         fetch(this.state.endpoint, {
             "Content-Type": "application/json",
             "Accept": "application/json"
@@ -33,7 +33,7 @@ export default class ListDogs extends Component{
                 dataSource: responseJson
             });
         }).catch((error) => console.log(error));
-    }
+    };
 
     render() {
         const { container } = styles;
@@ -46,12 +46,15 @@ export default class ListDogs extends Component{
             );
         }
         return (
-            <View style={container}>
-                <FlatList 
-                    data={this.state.dataSource}
-                    keyExtractor={ (item) => item.dogId.toString() } 
-                    renderItem={(item) => <DogListItem id={item.item.dogId} dog={item.item} />}
-                />
+            <View>
+                <Button onPress={this._getDogs} title="refresh" />
+                <View style={container}>
+                    <FlatList 
+                        data={this.state.dataSource}
+                        keyExtractor={ (item) => item.dogId.toString() } 
+                        renderItem={(item) => <DogListItem id={item.item.dogId} dog={item.item} />}
+                    />
+                </View>
             </View>
         );
     }

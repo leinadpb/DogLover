@@ -1,17 +1,14 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {Text, View} from 'react-native';
 
-import ListDogs from './src/components/ListDogs';
-import Header from './src/components/Header';
+import HomeScreen from './src/screens/HomeScreen';
+import AddDogScreen from './src/screens/AddDogScreen';
 
-export default class App extends Component {
-  render() {
-    return (
-      <View>
-        <Header title='Dog Lover' />
-        <ListDogs loadingText={'Loading...'} />
-      </View>
-    );
-  }
-}
+import { createBottomTabNavigator } from 'react-navigation';
 
+const App = createBottomTabNavigator({
+  Home: HomeScreen,
+  AddDog: AddDogScreen
+});
+
+export default App;
