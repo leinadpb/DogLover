@@ -55,34 +55,35 @@ export default class AddDogForm extends Component {
     _submitForm = () => {
         // Make Post request to create a new Dog
         this._createDog();
-
-        //this._resetForm();
+        this._resetForm();
     };
 
     _createDog = () => {
         let validated = this._validateForm();
-        fetch(ENDPOINT, {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json",
-                Accept: 'application/json'
-            },
-            body: JSON.stringify({
-                name: this.state.name,
-                age: this.state.age,
-                breed: this.state.breed,
-                sex: this.state.sex,
-                mainPicture: this.state.mainPicture,
-                ownerUniqueId: this.state.ownerUniqueId
+        if(validated){
+            fetch(ENDPOINT, {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: 'application/json'
+                },
+                body: JSON.stringify({
+                    name: this.state.name,
+                    age: this.state.age,
+                    breed: this.state.breed,
+                    sex: this.state.sex,
+                    mainPicture: this.state.mainPicture,
+                    ownerUniqueId: this.state.ownerUniqueId
+                })
+            }).then((response) => response.json())
+            .then((responseJson) => {
+                this.setState({
+                    created: true,
+                    createdDogName: responseJson.name
+                });
             })
-        }).then((response) => response.json())
-        .then((responseJson) => {
-            this.setState({
-                created: true,
-                createdDogName: responseJson.name
-            });
-        })
-        .catch((error) => console.log(error));
+            .catch((error) => console.log(error));
+        }
     };
 
     _validateForm = () => {
@@ -100,6 +101,14 @@ export default class AddDogForm extends Component {
             ownerUniqueId: ""
         });
     };
+
+    _addNewDog = () => {
+        this.setState({
+            created: false,
+            createdDogName: "",
+        });
+    };
+
     render() {
         const { container } = styles;
         if(!this.state.created){
@@ -138,6 +147,7 @@ export default class AddDogForm extends Component {
         return (
             <View>
                 <Text>{this.state.createdDogName} was created successfully!</Text>
+                <Button title="Add new dog" onPress={this._addNewDog} />
             </View>
         );
     }
