@@ -14,7 +14,7 @@ export default class AddDogScreen extends Component {
     render() {
         return (
             <View>
-                <Header title={ this.props.title } />
+                <Header title={ 'Add a dog' } />
                 <AddDogForm />
             </View>
         );

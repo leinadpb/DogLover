@@ -15,7 +15,7 @@ export default class HomeScreen extends Component {
     render() {
         return (
             <View>
-                <Header title={ this.props.title } />
+                <Header title={ 'Dog Lover' } />
                 <ListDogs loadingText={'Loading...'} />
             </View>
         );
